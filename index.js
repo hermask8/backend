@@ -50,5 +50,10 @@ app.use('/message', MessageRoute)
 
 
 app.listen("https://isproyecto.azurewebsites.net", () => {
+  app.use(function (request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
   console.log("Backend server is running!");
 });
