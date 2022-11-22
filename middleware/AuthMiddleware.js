@@ -6,6 +6,8 @@ const secret = process.env.JWTKEY;
 const authMiddleWare = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
+    res.header("Access-Control-Allow-Origin", "https://frontend-two-pink.vercel.app");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     console.log(token)
     if (token) {
       const decoded = jwt.verify(token, secret);
