@@ -16,15 +16,16 @@ import MessageRoute from './routes/MessageRoute.js'
 const app = express();
 
 // middleware
-app.use(function (request, response, next) {
-  response.header("Access-Control-Allow-Origin", "*");
-  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(morgan("common"));
-//app.use(cors());
+app.use(cors());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,access-token");
+  next();
+});
 
 // to serve images inside public folder
 app.use(express.static('public')); 
@@ -54,7 +55,6 @@ app.use('/chat', ChatRoute)
 app.use('/message', MessageRoute)
 
 
-app.listen("https://isproyecto.azurewebsites.net", () => {
-  
+app.listen(8080, () => {
   console.log("Backend server is running!");
 });
